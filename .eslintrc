@@ -11,8 +11,12 @@
     "comma-dangle": "off",
     "linebreak-style": "off",
     "require-jsdoc": "off",
+    "operator-linebreak": "off",
     //возможно это правило нужно будет удалить
-    "eol-last": "off"
+    "eol-last": "off",
+    "max-len": "off",
+    //игнорирует пробелы в в классах(core)
+    "no-trailing-spaces": "off"
   },
   "extends": ["eslint:recommended", "google"]
 }
