@@ -10,8 +10,10 @@
   & i {
     font-size: 18px;
   }
-  &:active, & .active {
+  &:active, &.active {
     color: $color;
+    // тень элемента при нажатии (active)
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
   }
   &:hover {
     background: #eee;
