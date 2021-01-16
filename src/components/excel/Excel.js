@@ -1,10 +1,11 @@
 import {$} from '@core/dom';
 import {Emmiter} from '@core/Emmiter';
 import {StoreSubscriber} from '@core/StoreSubscriber.JS';
+import {updateDate} from '@/redux/actions';
+import {preventDefault} from '@core/utils';
 
 export class Excel {
-  constructor(selector, options) {
-    this.$el = $(selector)
+  constructor(options) {
     this.components = options.components || []
     this.store = options.store
     this.emitter = new Emmiter()
@@ -31,17 +32,17 @@ export class Excel {
   }
 
 
-  render() {
-    // 4 типа статических строк,который может принимать метод insertAdjacentHTML:'afterbegin','afterend', 'beforeend', 'beforebegin'
-    // this.$el.insertAdjacentHTML('afterbegin', `<h1>Test</h1>`)
-    // 2 способ через node
-    this.$el.append(this.getRoot())
-
+  init() {
+    if (process.env.NODE_ENV === 'production') {
+      document.addEventListener('contextmenu', preventDefault)
+    }
+    this.store.dispatch(updateDate())
     this.subscriber.subscribeComponents(this.components)
     this.components.forEach(component => component.init())
   }
   destroy() {
     this.subscriber.unsubscribeFromStore()
     this.components.forEach(component => component.destroy())
+    document.removeEventListener('contextmenu', preventDefault)
   }
 }
