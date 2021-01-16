@@ -1,4 +1,5 @@
 const path = require('path')
+const webpack = require('webpack')
 const {CleanWebpackPlugin} = require('clean-webpack-plugin')
 const HTMLWebpackPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
@@ -38,7 +39,7 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js'],
-    //alias - import '../../../../core/Component' вместо "../../../../" используются alias
+    // alias - import '../../../../core/Component' вместо "../../../../" используются alias
     // import '@core/Component'
     alias: {
       '@': path.resolve(__dirname, 'src'),
@@ -68,6 +69,9 @@ module.exports = {
     }),
     new MiniCssExtractPlugin({
       filename: filename('css')
+    }),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
     })
   ],
   module: {
@@ -77,11 +81,11 @@ module.exports = {
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
-            //для webpack версии ^5.10.0 изменить версию в package.json
-            //options: {
-            //hmr:isDev,
+            // для webpack версии ^5.10.0 изменить версию в package.json
+            // options: {
+            // hmr:isDev,
             // target: isDev ? 'web' : 'browserslist',
-            //reloadAll: true
+            // reloadAll: true
             // }
           },
           'css-loader',
